@@ -39,7 +39,7 @@ def get_encoding_format(filename):
         'asc': 'text',          # TODO
     }
     try:
-        encoding_format = formats[filename.suffix]
+        encoding_format = formats[filename.suffix.lstrip('.')]
     except KeyError:
 #        print(f'No encoding format for this file: {filename}')
         encoding_format = ''
@@ -60,6 +60,7 @@ def main():
             dest_path=data_filepath,
             properties={
                 'name': str(data_filepath),
+                'contentSize': filesize,
                 'encodingFormat': get_encoding_format(data_filepath),
             })
 
