@@ -57,20 +57,11 @@ def main():
         filesize = FILESIZES[data_filepath.parts]
         crate.add_file(
             FILETREE_ROOT / data_filepath,
+            dest_path=data_filepath,
             properties={
-                '@id': str(data_filepath),
                 'name': str(data_filepath),
                 'encodingFormat': get_encoding_format(data_filepath),
             })
-#        print(filesize)
-
-#    experiment_names = sorted([
-#        directory.name for directory in DATA_ROOT.iterdir()])
-#    print(experiment_names)
-#    for experiment_name in experiment_names:
-
-
-
 
     crate.write(ROCRATE_EXPORT_ROOT)
 
