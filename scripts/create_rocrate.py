@@ -41,7 +41,9 @@ def get_encoding_format(filename):
     try:
         encoding_format = formats[filename.suffix]
     except KeyError:
-        print(f'No encoding format for this file: {filename}')
+#        print(f'No encoding format for this file: {filename}')
+        encoding_format = ''
+    return encoding_format
 
 def main():
     crate = ROCrate()
@@ -50,15 +52,17 @@ def main():
     data_filepaths = [
         Path(p).relative_to(FILETREE_ROOT)
         for p in glob.glob(str(DATA_ROOT / '*/*/*/*'))]
+    print(len(data_filepaths))
     for data_filepath in data_filepaths:
         filesize = FILESIZES[str(data_filepath)]
         crate.add_file(
-            data_filepath,
+            FILETREE_ROOT / data_filepath,
             properties={
-                'name': data_filepath.stem, # TODO: Maybe?
+                '@id': str(data_filepath),
+                'name': str(data_filepath),
                 'encodingFormat': get_encoding_format(data_filepath),
             })
-        print(filesize)
+#        print(filesize)
 
 #    experiment_names = sorted([
 #        directory.name for directory in DATA_ROOT.iterdir()])
