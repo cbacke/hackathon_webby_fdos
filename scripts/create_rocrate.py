@@ -17,7 +17,7 @@ with open(RAW_FILESIZES_PATH) as f:
     for line in f:
         size_bytes_raw, _, relpath_raw = line.strip().partition(' ')
         size_bytes = int(size_bytes_raw)
-        relpath = relpath_raw[2:]
+        relpath = tuple(relpath_raw[2:].split('/'))
         FILESIZES[relpath] = size_bytes
 
 def get_encoding_format(filename):
@@ -54,7 +54,7 @@ def main():
         for p in glob.glob(str(DATA_ROOT / '*/*/*/*'))]
     print(len(data_filepaths))
     for data_filepath in data_filepaths:
-        filesize = FILESIZES[str(data_filepath)]
+        filesize = FILESIZES[data_filepath.parts]
         crate.add_file(
             FILETREE_ROOT / data_filepath,
             properties={
