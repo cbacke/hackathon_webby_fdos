@@ -55,9 +55,30 @@ def get_encoding_format(filename):
 
 def main():
     crate = ROCrate()
-    crate.datePublished = 'foo'
-    # crate.add()   # TODO: zip archives have PIDs and public URLs
+    crate.datePublished = '2024-06-26'
 
+    crate.root_dataset['identifier'] = 'https://doi.org/10.5281/zenodo.12547116'
+
+    # TODO: zip archives have PIDs and public URLs
+    crate.add_file(
+        FILETREE_ROOT / 'data.zip',
+        fetch_remote=False,
+        properties={
+            'contentUrl': 'https://zenodo.org/records/12547116/files/data.zip',
+            'contentSize': 4579311616,
+            'encodingFormat': 'application/zip'
+        }
+    )
+#    crate.add_file(
+#        FILETREE_ROOT / 'specification.zip',
+#        dest_path='specification.zip',
+#        properties={
+#            'url': 'https://doi.org/10.5281/zenodo.12547116',
+#            'contentSize': 4579311616,
+#            'encodingFormat': 'application/zip'
+#        }
+#    )
+#
     # Data filepaths
     data_filepaths = [
         Path(p).relative_to(FILETREE_ROOT)
